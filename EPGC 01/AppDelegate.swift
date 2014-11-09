@@ -22,9 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
         splitViewController.delegate = self
 
+        // Get reference to MasterViewController and give it a reference to managedObjectContext
         let masterNavigationController = splitViewController.viewControllers[0] as UINavigationController
         let controller = masterNavigationController.topViewController as MasterViewController
         controller.managedObjectContext = self.managedObjectContext
+        
+        // Get reference to DetailTableViewController and give it a reference to managedObjectContext
+        let controllers = controller.splitViewController!.viewControllers
+        let detailTableViewController = controllers[controllers.endIndex-1].topViewController as? DetailTableViewController
+        detailTableViewController?.managedObjectContext = self.managedObjectContext
+       
         return true
     }
 
