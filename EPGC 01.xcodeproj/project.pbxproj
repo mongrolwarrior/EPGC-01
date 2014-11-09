@@ -10,12 +10,12 @@
 		3584486A1A08FB4F00FAB223 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358448691A08FB4F00FAB223 /* AppDelegate.swift */; };
 		3584486D1A08FB4F00FAB223 /* EPGC_01.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3584486B1A08FB4F00FAB223 /* EPGC_01.xcdatamodeld */; };
 		3584486F1A08FB4F00FAB223 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3584486E1A08FB4F00FAB223 /* MasterViewController.swift */; };
-		358448711A08FB4F00FAB223 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358448701A08FB4F00FAB223 /* DetailViewController.swift */; };
 		358448741A08FB4F00FAB223 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 358448721A08FB4F00FAB223 /* Main.storyboard */; };
 		358448761A08FB4F00FAB223 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 358448751A08FB4F00FAB223 /* Images.xcassets */; };
 		358448791A08FB4F00FAB223 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 358448771A08FB4F00FAB223 /* LaunchScreen.xib */; };
 		358448851A08FB5000FAB223 /* EPGC_01Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358448841A08FB5000FAB223 /* EPGC_01Tests.swift */; };
 		358448931A09079900FAB223 /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358448921A09079900FAB223 /* DetailTableViewController.swift */; };
+		358448D51A0EFDAF00FAB223 /* PatientDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358448D41A0EFDAF00FAB223 /* PatientDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +34,6 @@
 		358448691A08FB4F00FAB223 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3584486C1A08FB4F00FAB223 /* EPGC_01.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EPGC_01.xcdatamodel; sourceTree = "<group>"; };
 		3584486E1A08FB4F00FAB223 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MasterViewController.swift; path = "EPGC 01/MasterViewController.swift"; sourceTree = "<group>"; };
-		358448701A08FB4F00FAB223 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailViewController.swift; path = "EPGC 01/DetailViewController.swift"; sourceTree = "<group>"; };
 		358448731A08FB4F00FAB223 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		358448751A08FB4F00FAB223 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		358448781A08FB4F00FAB223 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -43,6 +42,7 @@
 		358448841A08FB5000FAB223 /* EPGC_01Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EPGC_01Tests.swift; sourceTree = "<group>"; };
 		3584488E1A09014D00FAB223 /* EPGC_ 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "EPGC_ 2.xcdatamodel"; sourceTree = "<group>"; };
 		358448921A09079900FAB223 /* DetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
+		358448D41A0EFDAF00FAB223 /* PatientDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,9 +132,9 @@
 		358448901A09076100FAB223 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				358448701A08FB4F00FAB223 /* DetailViewController.swift */,
 				3584486E1A08FB4F00FAB223 /* MasterViewController.swift */,
 				358448921A09079900FAB223 /* DetailTableViewController.swift */,
+				358448D41A0EFDAF00FAB223 /* PatientDetailsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -250,8 +250,8 @@
 				3584486A1A08FB4F00FAB223 /* AppDelegate.swift in Sources */,
 				358448931A09079900FAB223 /* DetailTableViewController.swift in Sources */,
 				3584486D1A08FB4F00FAB223 /* EPGC_01.xcdatamodeld in Sources */,
+				358448D51A0EFDAF00FAB223 /* PatientDetailsViewController.swift in Sources */,
 				3584486F1A08FB4F00FAB223 /* MasterViewController.swift in Sources */,
-				358448711A08FB4F00FAB223 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

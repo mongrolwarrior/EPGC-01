@@ -121,6 +121,38 @@ class DetailTableViewController: UITableViewController, NSFetchedResultsControll
         cell.detailTextLabel?.text = String(object.valueForKey("caseManager")!.description)
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let patientDetails = PatientDetailsViewController()
+        let mainview = patientDetails.view
+        
+        let b = self.splitViewController!.displayModeButtonItem()
+        patientDetails.navigationItem.leftBarButtonItem = b
+        patientDetails.navigationItem.leftItemsSupplementBackButton = true
+        
+        let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
+        patientDetails.selectedPatient = String(object.valueForKey("firstName")!.description) + " " + String(object.valueForKey("lastName")!.description)
+        
+        let nav = UINavigationController(rootViewController: patientDetails)
+        self.showDetailViewController(nav , sender: self)
+    }
+    
+    /*
+    let detail = DetailTableViewController()
+    detail.managedObjectContext = self.managedObjectContext
+    let b = self.splitViewController!.displayModeButtonItem()
+    detail.navigationItem.leftBarButtonItem = b
+    detail.navigationItem.leftItemsSupplementBackButton = true
+    
+    let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
+    detail.selectedCM = String(object.valueForKey("firstName")!.description) + " " + String(object.valueForKey("lastName")!.description)
+    
+    let nav = UINavigationController(rootViewController: detail)
+    self.showDetailViewController(nav, sender: self)
+    
+    splitViewController?.preferredDisplayMode = .PrimaryHidden
+
+*/
+    
     // MARK: - Fetched results controller
     
     var fetchedResultsController: NSFetchedResultsController {
