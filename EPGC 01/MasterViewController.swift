@@ -75,7 +75,15 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         let nav = UINavigationController(rootViewController: detail)
         self.showDetailViewController(nav, sender: self)
         
-        splitViewController?.preferredDisplayMode = .PrimaryHidden
+        var f = UIWindow(frame: UIScreen.mainScreen().bounds)
+        if f.bounds.size.height > f.bounds.size.width {  // eg, if in portrait mode
+            splitViewController?.preferredDisplayMode = .PrimaryHidden
+        }
+        else
+        {
+            splitViewController?.preferredDisplayMode = .Automatic
+        }
+        
     }
     
     // MARK: - Segues

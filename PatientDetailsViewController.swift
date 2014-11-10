@@ -13,16 +13,25 @@ class PatientDetailsViewController: UIViewController, UITableViewDataSource, UIT
     var managedObjectContext: NSManagedObjectContext? = nil
     var selectedPatient: String? = nil
     
+    convenience init(patientName: String) {
+        self.init()
+        self.selectedPatient = patientName
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let v = self.view
         
         let w = UIView(frame: CGRectMake(0, 0, v.bounds.width, v.bounds.height/2.0))
         
         let label = UILabel()
         w.addSubview(label)
-        label.text = "Hello, World!"
+        if self.selectedPatient != nil {
+            label.text = selectedPatient
+        } else {
+            label.text = "No Patient Selected!"
+        }
         label.autoresizingMask = .FlexibleTopMargin | .FlexibleLeftMargin | .FlexibleBottomMargin | .FlexibleRightMargin
         label.sizeToFit()
         label.center = CGPointMake(w.bounds.midX, w.bounds.midX)
@@ -38,11 +47,12 @@ class PatientDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return self.fetchedResultsController.sections?.count ?? 0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        let sectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
+        return sectionInfo.numberOfObjects
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -55,9 +65,18 @@ class PatientDetailsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        cell.textLabel.text = "Title"
-        cell.detailTextLabel?.text = "Subtitle"
+        let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
+        cell.textLabel.text = String(object.valueForKey("outcomeType")!.description)
+        let score = UInt(object.valueForKey("outcomeScore")! as NSNumber)
+        cell.detailTextLabel?.text = score.description
     }
+    
+    /*
+    let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
+    cell.textLabel.text = String(object.valueForKey("firstName")!.description) + " " + String(object.valueForKey("lastName")!.description)
+    cell.detailTextLabel?.text = String(object.valueForKey("caseManager")!.description)
+
+*/
     
     // MARK: - Fetched results controller
     
@@ -76,11 +95,11 @@ class PatientDetailsViewController: UIViewController, UITableViewDataSource, UIT
         
         // Set NSPredicate for request, based on case manager name
         if selectedPatient != nil {
-            fetchRequest.predicate = NSPredicate(format: "patient = '\(self.selectedPatient!)'")
+            fetchRequest.predicate = NSPredicate(format: "patientName = '\(self.selectedPatient!)'")
         }
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "lastName", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "patientName", ascending: true)
         let sortDescriptors = [sortDescriptor]
         
         fetchRequest.sortDescriptors = [sortDescriptor]

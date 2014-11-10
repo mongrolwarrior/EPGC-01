@@ -73,10 +73,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return false
     }
     // MARK: - Core Data stack
+    var options: NSDictionary?
 
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "SlyLie.EPGC_01" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        println(urls)
         return urls[urls.count-1] as NSURL
     }()
 
@@ -90,10 +92,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+        
+        // These options set up light migration as per Core Data by Tutorials p141
+        var options: NSDictionary? = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
+        
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("EPGC_01.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options, error: &error) == nil {
             coordinator = nil
             // Report any error we got.
             let dict = NSMutableDictionary()

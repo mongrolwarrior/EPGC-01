@@ -122,36 +122,18 @@ class DetailTableViewController: UITableViewController, NSFetchedResultsControll
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let patientDetails = PatientDetailsViewController()
+        let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
+        let patientDetails = PatientDetailsViewController(patientName: (String(object.valueForKey("firstName")!.description) + " " + String(object.valueForKey("lastName")!.description)))
+        patientDetails.managedObjectContext = self.managedObjectContext
         let mainview = patientDetails.view
         
         let b = self.splitViewController!.displayModeButtonItem()
         patientDetails.navigationItem.leftBarButtonItem = b
         patientDetails.navigationItem.leftItemsSupplementBackButton = true
         
-        let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
-        patientDetails.selectedPatient = String(object.valueForKey("firstName")!.description) + " " + String(object.valueForKey("lastName")!.description)
-        
         let nav = UINavigationController(rootViewController: patientDetails)
         self.showDetailViewController(nav , sender: self)
     }
-    
-    /*
-    let detail = DetailTableViewController()
-    detail.managedObjectContext = self.managedObjectContext
-    let b = self.splitViewController!.displayModeButtonItem()
-    detail.navigationItem.leftBarButtonItem = b
-    detail.navigationItem.leftItemsSupplementBackButton = true
-    
-    let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
-    detail.selectedCM = String(object.valueForKey("firstName")!.description) + " " + String(object.valueForKey("lastName")!.description)
-    
-    let nav = UINavigationController(rootViewController: detail)
-    self.showDetailViewController(nav, sender: self)
-    
-    splitViewController?.preferredDisplayMode = .PrimaryHidden
-
-*/
     
     // MARK: - Fetched results controller
     
