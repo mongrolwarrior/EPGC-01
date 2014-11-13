@@ -8,42 +8,102 @@
 
 import UIKit
 import CoreData
+import Foundation
 
-class PatientDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class PatientDetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, JBBarChartViewDataSource, JBBarChartViewDelegate {
     var managedObjectContext: NSManagedObjectContext? = nil
     var selectedPatient: String? = nil
+    let _barChartView = JBBarChartView()
+    
+    let _headerHeight:CGFloat = 80;
+    let _footerHeight:CGFloat = 25;
+    let _padding:CGFloat = 10;
+    
+    let _headerView = HeaderView()
+    let _footerView = FooterView()
     
     convenience init(patientName: String) {
         self.init()
         self.selectedPatient = patientName
     }
     
+    func barChartView(barChartView: JBBarChartView!, colorForBarViewAtIndex index: UInt) -> UIColor! {
+        return UIColor.redColor()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        super.view.backgroundColor = UIColor.whiteColor()
+        
         let v = self.view
         
-        let w = UIView(frame: CGRectMake(0, 0, v.bounds.width, v.bounds.height/2.0))
-        
-        let label = UILabel()
-        w.addSubview(label)
-        if self.selectedPatient != nil {
-            label.text = selectedPatient
-        } else {
-            label.text = "No Patient Selected!"
-        }
-        label.autoresizingMask = .FlexibleTopMargin | .FlexibleLeftMargin | .FlexibleBottomMargin | .FlexibleRightMargin
-        label.sizeToFit()
-        label.center = CGPointMake(w.bounds.midX, w.bounds.midX)
-        label.frame.integerize()
-        
-        v.addSubview(w)
-     
-        let x = UITableView(frame: CGRectMake(0, v.bounds.height/2.0, v.bounds.width, v.bounds.height/2.0))
+        // Table View
+        let x = UITableView()//frame: CGRectMake(0, v.bounds.height/2.0, v.bounds.width, v.bounds.height/2.0))
         x.delegate = self
         x.dataSource = self
+        x.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         v.addSubview(x)
+        
+        // JBChartView
+        _barChartView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        v.addSubview(_barChartView)
+        
+        _barChartView.dataSource = self
+        _barChartView.delegate = self
+        
+        self.navigationItem.title = selectedPatient
+        
+        _barChartView.backgroundColor = uicolorFromHex(0x3c3c3c)
+        _barChartView.minimumValue = 0
+        
+        _barChartView.reloadData()
+        
+        let viewsDictionary = ["view1":_barChartView, "tlg": self.topLayoutGuide, "tableView": x]
+        
+        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|[view1]|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let view_constraint_H2: NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|[tableView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:[tlg][view1(==tableView)][tableView]|", options: NSLayoutFormatOptions.AlignAllLeading, metrics: nil, views: viewsDictionary)
+        
+        v.addConstraints(view_constraint_H)
+        v.addConstraints(view_constraint_H2)
+        v.addConstraints(view_constraint_V)
+        
+        v.setNeedsLayout()
+        v.layoutIfNeeded()
+
+        
+        // Header
+        _headerView.titleLabel.text = "HoNOS Data"
+        _headerView.subtitleLabel.text = selectedPatient
+        _headerView.backgroundColor = uicolorFromHex(0x3c3c3c)
+        _barChartView.headerView = _headerView
+        
+        // Footer
+        _footerView.padding = _padding
+        _footerView.backgroundColor = uicolorFromHex(0x3c3c3c)
+        _footerView.leftLabel.text = "1"
+        _footerView.leftLabel.textColor = UIColor.whiteColor()
+        _footerView.rightLabel.text = "3"
+        _footerView.rightLabel.textColor = UIColor.whiteColor()
+        _barChartView.footerView = _footerView
+    }
+    
+    func numberOfBarsInBarChartView(barChartView: JBBarChartView) -> UInt {
+        return 3
+    }
+    // - (CGFloat)barChartView:(JBBarChartView *)barChartView heightForBarViewAtIndex:(NSUInteger)index;
+    
+    func barChartView(barChartView: JBBarChartView!, heightForBarViewAtIndex index: UInt) -> CGFloat {
+        switch index {
+        case 0:
+            return 5.0
+        case 1:
+            return 10.0
+        default:
+            return 15.0
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -121,4 +181,12 @@ class PatientDetailsViewController: UIViewController, UITableViewDataSource, UIT
         return _fetchedResultsController!
     }
     var _fetchedResultsController: NSFetchedResultsController? = nil
+    
+    func uicolorFromHex(rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
+    }
 }
