@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="CaseManager" syncable="YES">
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EpisodesOfCare" syncable="YES">
+        <attribute name="careUnit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateEnded" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateStarted" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="inpatientUnit" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="patientURN" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Patient" syncable="YES">
+        <attribute name="caseManager" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patientURN" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PatientOutcomes" syncable="YES">
+        <attribute name="outcomeDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="outcomeScore" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="outcomeType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patientName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CaseManager" positionX="261" positionY="198" width="128" height="73"/>
+        <element name="Patient" positionX="270" positionY="216" width="128" height="103"/>
+        <element name="PatientOutcomes" positionX="288" positionY="243" width="128" height="103"/>
+        <element name="EpisodesOfCare" positionX="279" positionY="252" width="128" height="118"/>
+    </elements>
+</model>
